@@ -20,14 +20,13 @@ public class Books {
     private Titles title;
     private List<BooksBorrowing> booksBorrowing;
 
-    public Books (Long bookId, String  status) {
-        this.bookId = bookId;
+    public Books (String status) {
         this.status = status;
     }
 
     @Id
     @NotNull
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "BOOK_ID", unique = true)
     public Long getBookId() {
         return bookId;
@@ -47,9 +46,11 @@ public class Books {
 
     @OneToMany(
             targetEntity = BooksBorrowing.class,
-            mappedBy = "booksBorrowing",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            mappedBy = "books",
+            cascade = {CascadeType.PERSIST,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH},
+            fetch = FetchType.EAGER
     )
     public List<BooksBorrowing> getBooksBorrowing() {
         return booksBorrowing;

@@ -29,8 +29,8 @@ public class Readers {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "READER_ID", unique = true)
     public Long getReaderId() {
         return readerId;
@@ -56,8 +56,10 @@ public class Readers {
     @OneToMany(
             targetEntity = BooksBorrowing.class,
             mappedBy = "readers",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            cascade = {CascadeType.PERSIST,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH},
+            fetch = FetchType.EAGER
     )
     public List<BooksBorrowing> getBooksBorrowingList() {
         return booksBorrowingList;

@@ -28,7 +28,7 @@ public class BooksBorrowing {
 
     @Id
     @NotNull
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "BORROWING_ID", unique = true)
     public Long getBorrowingId() {
         return borrowingId;
@@ -44,13 +44,17 @@ public class BooksBorrowing {
         return dateOfReturn;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST,
+            CascadeType.MERGE,
+            CascadeType.REFRESH})
     @JoinColumn(name = "BOOK_ID")
     public Books getBooks() {
         return books;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST,
+            CascadeType.MERGE,
+            CascadeType.REFRESH})
     @JoinColumn(name = "READER_ID")
     public Readers getReaders() {
         return readers;
