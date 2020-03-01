@@ -18,13 +18,14 @@ public class BookBorrowingMapper {
     @Autowired
     private ReadersDao readersDao;
 
-    public BooksBorrowing mapToBorrowing (BooksBorrowingDto booksBorrowingDto) throws BookNotFoundException, ReadersNotFoundException {
+    public BooksBorrowing mapToBorrowingBook (BooksBorrowingDto booksBorrowingDto) throws BookNotFoundException, ReadersNotFoundException {
 
         BooksBorrowing booksBorrowing = new BooksBorrowing(
             booksBorrowingDto.getDateOfBorrowing(),
             booksBorrowingDto.getDateOfReturn()
         );
 
+        booksBorrowing.setBorrowingId(booksBorrowingDto.getBorrowingId());
         booksBorrowing.setBooks(booksDao.findById(booksBorrowingDto.getBooksId()).orElseThrow(BookNotFoundException::new));
         booksBorrowing.setReaders(readersDao.findById(booksBorrowingDto.getReadersId()).orElseThrow(ReadersNotFoundException::new));
 
@@ -35,10 +36,10 @@ public class BookBorrowingMapper {
 
         return new BooksBorrowingDto(
           booksBorrowing.getBorrowingId(),
-                booksBorrowing.getDateOfBorrowing(),
-                booksBorrowing.getDateOfReturn(),
-                booksBorrowing.getBooks().getBookId(),
-                booksBorrowing.getReaders().getReaderId()
+          booksBorrowing.getDateOfBorrowing(),
+          booksBorrowing.getDateOfReturn(),
+          booksBorrowing.getBooks().getBookId(),
+          booksBorrowing.getReaders().getReaderId()
         );
     }
 }
