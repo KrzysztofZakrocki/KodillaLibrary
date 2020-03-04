@@ -14,8 +14,7 @@ import java.util.List;
 @Setter
 public class BooksDto {
 
-    private Long bookId;
     private String status;
-    private Titles title;
+    private String title;
     private List<BooksBorrowing> booksBorrowing;
 }

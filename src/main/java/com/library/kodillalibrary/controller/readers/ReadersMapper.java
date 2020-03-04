@@ -2,7 +2,9 @@ package com.library.kodillalibrary.controller.readers;
 
 import com.library.kodillalibrary.domain.readers.Readers;
 import com.library.kodillalibrary.domain.readers.ReadersDto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ReadersMapper {
 
     public ReadersDto mapToDto(Readers reader) {

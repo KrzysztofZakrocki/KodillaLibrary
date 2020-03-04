@@ -21,9 +21,8 @@ public class BooksBorrowing {
     private Books books;
     private Readers readers;
 
-    public BooksBorrowing(Date dateOfBorrowing, Date dateOfReturn) {
+    public BooksBorrowing(Date dateOfBorrowing) {
         this.dateOfBorrowing = dateOfBorrowing;
-        this.dateOfReturn = dateOfReturn;
     }
 
     @Id

@@ -38,7 +38,9 @@ public class Books {
         return status;
     }
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.PERSIST,
+            CascadeType.MERGE,
+            CascadeType.REFRESH})
     @JoinColumn(name = "TITLE_ID")
     public Titles getTitle() {
         return title;

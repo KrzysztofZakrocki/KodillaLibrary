@@ -1,17 +1,30 @@
 package com.library.kodillalibrary.controller.books;
 
-import com.library.kodillalibrary.controller.titles.TitlesNotFoundException;
 import com.library.kodillalibrary.domain.books.Books;
 import com.library.kodillalibrary.domain.books.BooksDto;
+import com.library.kodillalibrary.domain.titles.Titles;
+import com.library.kodillalibrary.domain.titles.dao.TitlesDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Component
 public class BooksMapper {
 
-    public Books mapToBook(BooksDto booksDto) throws TitlesNotFoundException {
+    @Autowired
+    private TitlesDao titlesDao;
+
+    public Books mapToBook(BooksDto booksDto) {
         Books book = new Books(
             booksDto.getStatus()
         );
-        book.setBookId(booksDto.getBookId());
-        book.setTitle(booksDto.getTitle());
+        List<Titles> titlesList = titlesDao.findAll().stream().
+                filter(t -> t.getTitle().equals(booksDto.getTitle()))
+                .collect(Collectors.toList());
+
+        book.setTitle(titlesList.get(0));
         book.setBooksBorrowing(booksDto.getBooksBorrowing());
 
         return book;
@@ -19,9 +32,8 @@ public class BooksMapper {
 
     public BooksDto mapToDto(Books book) {
         return new BooksDto(
-          book.getBookId(),
           book.getStatus(),
-          book.getTitle(),
+          book.getTitle().getTitle(),
           book.getBooksBorrowing()
         );
     }

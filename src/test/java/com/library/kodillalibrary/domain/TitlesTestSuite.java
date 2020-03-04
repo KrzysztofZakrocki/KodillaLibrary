@@ -50,7 +50,10 @@ public class TitlesTestSuite {
         //Given
         Titles title = new Titles("Lord of The Rings", "Tolkien", 1950);
         Books book = new Books("Borrowed");
+        List<Books> booksList = new ArrayList<>();
+        booksList.add(book);
         book.setTitle(title);
+        title.setBooksList(booksList);
         //When
         booksDao.save(book);
         titlesDao.save(title);
@@ -60,6 +63,7 @@ public class TitlesTestSuite {
         assertTrue(titleInTest.isPresent());
         assertEquals("Tolkien", titleInTest.get().getAuthor());
         assertEquals(1950, booksDao.findById(book.getBookId()).get().getTitle().getYearOfPublication());
+        assertEquals("Borrowed", titlesDao.findById(titleId).get().getBooksList().get(0).getStatus());
         //CleanUp
         titlesDao.deleteById(titleId);
     }

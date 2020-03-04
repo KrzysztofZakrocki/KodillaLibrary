@@ -21,8 +21,7 @@ public class BookBorrowingMapper {
     public BooksBorrowing mapToBorrowingBook (BooksBorrowingDto booksBorrowingDto) throws BookNotFoundException, ReadersNotFoundException {
 
         BooksBorrowing booksBorrowing = new BooksBorrowing(
-            booksBorrowingDto.getDateOfBorrowing(),
-            booksBorrowingDto.getDateOfReturn()
+            booksBorrowingDto.getDateOfBorrowing()
         );
 
         booksBorrowing.setBorrowingId(booksBorrowingDto.getBorrowingId());
