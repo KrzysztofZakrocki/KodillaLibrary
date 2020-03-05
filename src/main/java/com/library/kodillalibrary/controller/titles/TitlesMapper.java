@@ -4,8 +4,6 @@ import com.library.kodillalibrary.domain.titles.Titles;
 import com.library.kodillalibrary.domain.titles.TitlesDto;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-
 @Component
 public class TitlesMapper {
 

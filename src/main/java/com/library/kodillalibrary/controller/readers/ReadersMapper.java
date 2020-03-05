@@ -23,7 +23,9 @@ public class ReadersMapper {
                 readersDto.getLastname()
         );
         reader.setReaderId(readersDto.getReaderId());
-        reader.setAccountCreateDate(readersDto.getAccountCreateDate());
+        if(readersDto.getAccountCreateDate() != null){
+            reader.setAccountCreateDate(readersDto.getAccountCreateDate());
+        }
         reader.setBooksBorrowingList(readersDto.getBooksBorrowingList());
 
         return reader;

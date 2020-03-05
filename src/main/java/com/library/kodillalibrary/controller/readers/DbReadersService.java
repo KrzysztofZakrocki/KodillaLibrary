@@ -11,11 +11,7 @@ public class DbReadersService {
     @Autowired
     private ReadersDao readersDao;
 
-    public Readers saveReader(String readerFirstname, String readerLastname) {
-        Readers reader = new Readers(
-                readerFirstname,
-                readerLastname
-        );
+    public Readers saveReader(Readers reader) {
         return readersDao.save(reader);
     }
 }

@@ -27,25 +27,25 @@ public class LibraryController {
     private DbBooksService bookService;
 
     @Autowired
-    private TitlesMapper titlesMapper;
+    private TitlesMapper titleMapper;
     @Autowired
-    private ReadersMapper readersMapper;
+    private ReadersMapper readerMapper;
     @Autowired
-    private BooksMapper booksMapper;
+    private BooksMapper bookMapper;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/readers/{readerFirstname}/lastname/{readerLastname}")
-    public ReadersDto addReader(@PathVariable String readerFirstname, @PathVariable String readerLastname) {
-        return readersMapper.mapToDto(readerService.saveReader(readerFirstname, readerLastname));
+    @RequestMapping(method = RequestMethod.POST, value = "/readers", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ReadersDto addReader(@RequestBody ReadersDto readerDto) {
+        return readerMapper.mapToDto(readerService.saveReader(readerMapper.mapToReaders(readerDto)));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/titles", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public TitlesDto addTitle(@RequestBody TitlesDto titlesDto) {
-        return titlesMapper.mapToDto(titleService.addTitle(titlesMapper.mapToTitles(titlesDto)));
+    public TitlesDto addTitle(@RequestBody TitlesDto titleDto) {
+        return titleMapper.mapToDto(titleService.addTitle(titleMapper.mapToTitles(titleDto)));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/books", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public BooksDto addBook(@RequestBody BooksDto booksDto) {
-       return booksMapper.mapToDto(bookService.saveBook(booksMapper.mapToBook(booksDto)));
+    public BooksDto addBook(@RequestBody BooksDto bookDto) {
+       return bookMapper.mapToDto(bookService.saveBook(bookMapper.mapToBook(bookDto)));
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/books/{bookId}/status/{status}")
