@@ -17,16 +17,16 @@ public class ReadersMapper {
         );
     }
 
-    public Readers mapToReaders(ReadersDto readersDto) {
+    public Readers mapToReader(ReadersDto readerDto) {
         Readers reader = new Readers(
-                readersDto.getFirstname(),
-                readersDto.getLastname()
+                readerDto.getFirstname(),
+                readerDto.getLastname()
         );
-        reader.setReaderId(readersDto.getReaderId());
-        if(readersDto.getAccountCreateDate() != null){
-            reader.setAccountCreateDate(readersDto.getAccountCreateDate());
+        reader.setReaderId(readerDto.getReaderId());
+        if(readerDto.getAccountCreateDate() != null){
+            reader.setAccountCreateDate(readerDto.getAccountCreateDate());
         }
-        reader.setBooksBorrowingList(readersDto.getBooksBorrowingList());
+        reader.setBooksBorrowingList(readerDto.getBooksBorrowingList());
 
         return reader;
     }

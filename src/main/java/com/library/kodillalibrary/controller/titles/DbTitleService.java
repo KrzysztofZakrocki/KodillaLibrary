@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 public class DbTitleService {
 
     @Autowired
-    private TitlesDao titlesDao;
+    private TitlesDao titleDao;
 
     public Titles addTitle(Titles title) {
-        return titlesDao.save(title);
+        return titleDao.save(title);
     }
 }

@@ -1,4 +1,4 @@
 package com.library.kodillalibrary.controller.readers;
 
-public class ReadersNotFoundException extends Exception {
+public class ReaderNotFoundException extends Exception {
 }

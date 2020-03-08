@@ -1,4 +1,4 @@
 package com.library.kodillalibrary.controller.titles;
 
-public class TitlesNotFoundException extends Exception {
+public class TitleNotFoundException extends Exception {
 }

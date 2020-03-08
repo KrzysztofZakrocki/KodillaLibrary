@@ -25,33 +25,33 @@ import static org.junit.Assert.assertTrue;
 public class BooksTestSuite {
 
     @Autowired
-    public BooksDao booksDao;
+    public BooksDao bookDao;
 
     @Autowired
-    public TitlesDao titlesDao;
+    public TitlesDao titleDao;
 
     @Autowired
-    public BooksBorrowingDao booksBorrowingDao;
+    public BooksBorrowingDao bookBorrowingDao;
 
     @Test
     public void testBooksSave() {
         //Given
         Books book = new Books("Borrowed");
         //When
-        booksDao.save(book);
+        bookDao.save(book);
         long id = book.getBookId();
-        Optional<Books> booksInTest = booksDao.findById(id);
+        Optional<Books> booksInTest = bookDao.findById(id);
         //Then
         assertTrue(booksInTest.isPresent());
         //CleanUp
-        booksDao.deleteById(id);
+        bookDao.deleteById(id);
     }
 
     @Test
     public void testBooksWithOtherEntities() {
         //Given
         Books book = new Books("Borrowed");
-        BooksBorrowing bookBorrowing = new BooksBorrowing(new Date() , new Date());
+        BooksBorrowing bookBorrowing = new BooksBorrowing(new Date());
         Titles title  = new Titles("Lord of the rings", "J.r.r. Tolkien", 1950);
         List<BooksBorrowing> booksBorrowingList = new ArrayList<>();
         booksBorrowingList.add(bookBorrowing);
@@ -59,19 +59,19 @@ public class BooksTestSuite {
         bookBorrowing.setBooks(book);
         book.setTitle(title);
         //When
-        booksDao.save(book);
-        booksBorrowingDao.save(bookBorrowing);
-        titlesDao.save(title);
+        bookDao.save(book);
+        bookBorrowingDao.save(bookBorrowing);
+        titleDao.save(title);
         long id = book.getBookId();
-        Optional<Books> booksInTest = booksDao.findById(id);
+        Optional<Books> booksInTest = bookDao.findById(id);
         //Then
         assertTrue(booksInTest.isPresent());
         assertEquals(new Long(id), booksInTest.get().getBookId());
         assertEquals(new Long(bookBorrowing.getBorrowingId()), booksInTest.get().getBooksBorrowing().get(0).getBorrowingId());
         assertEquals("J.r.r. Tolkien", booksInTest.get().getTitle().getAuthor());
         //CleanUp
-        booksDao.deleteById(id);
-        booksBorrowingDao.deleteById(bookBorrowing.getBorrowingId());
-        titlesDao.deleteById(title.getTitleId());
+        bookDao.deleteById(id);
+        bookBorrowingDao.deleteById(bookBorrowing.getBorrowingId());
+        titleDao.deleteById(title.getTitleId());
     }
 }

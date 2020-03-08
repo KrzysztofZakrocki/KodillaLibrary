@@ -16,6 +16,6 @@ public class BooksBorrowingDto {
     private Long borrowingId;
     private Date dateOfBorrowing;
     private Date dateOfReturn;
-    private Long booksId;
-    private Long readersId;
+    private Long bookId;
+    private Long readerId;
 }

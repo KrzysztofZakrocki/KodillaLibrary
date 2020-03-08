@@ -16,16 +16,16 @@ public class BooksMapper {
     @Autowired
     private TitlesDao titlesDao;
 
-    public Books mapToBook(BooksDto booksDto) {
+    public Books mapToBook(BooksDto bookDto) {
         Books book = new Books(
-            booksDto.getStatus()
+            bookDto.getStatus()
         );
         List<Titles> titlesList = titlesDao.findAll().stream().
-                filter(t -> t.getTitle().equals(booksDto.getTitle()))
+                filter(t -> t.getTitle().equals(bookDto.getTitle()))
                 .collect(Collectors.toList());
 
         book.setTitle(titlesList.get(0));
-        book.setBooksBorrowing(booksDto.getBooksBorrowing());
+        book.setBooksBorrowing(bookDto.getBooksBorrowing());
 
         return book;
     }

@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 public class DbReadersService {
 
     @Autowired
-    private ReadersDao readersDao;
+    private ReadersDao readerDao;
 
     public Readers saveReader(Readers reader) {
-        return readersDao.save(reader);
+        return readerDao.save(reader);
     }
 }

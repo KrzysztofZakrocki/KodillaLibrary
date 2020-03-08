@@ -11,8 +11,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,54 +24,54 @@ import static org.junit.Assert.assertTrue;
 public class BooksBorrowingTestSuite {
 
     @Autowired
-    public BooksBorrowingDao booksBorrowingDao;
+    public BooksBorrowingDao bookBorrowingDao;
 
     @Autowired
-    public BooksDao booksDao;
+    public BooksDao bookDao;
 
     @Autowired
-    public ReadersDao readersDao;
+    public ReadersDao readerDao;
 
     @Test
     public void testBooksBorrowingSave() {
         //Given
-        BooksBorrowing booksBorrowing = new BooksBorrowing(new Date() , new Date());
+        BooksBorrowing bookBorrowing = new BooksBorrowing(new Date());
         //When
-        booksBorrowingDao.save(booksBorrowing);
-        long id = booksBorrowing.getBorrowingId();
-        Optional<BooksBorrowing> booksBorrowingInTest = booksBorrowingDao.findById(id);
+        bookBorrowingDao.save(bookBorrowing);
+        long id = bookBorrowing.getBorrowingId();
+        Optional<BooksBorrowing> bookBorrowingInTest = bookBorrowingDao.findById(id);
         //Then
-        assertTrue(booksBorrowingInTest.isPresent());
+        assertTrue(bookBorrowingInTest.isPresent());
         //CleanUp
-        booksBorrowingDao.deleteById(id);
+        bookBorrowingDao.deleteById(id);
     }
 
     @Test
     public void testBooksBorrowingWithOtherEntities() {
         //Given
-        BooksBorrowing booksBorrowing = new BooksBorrowing(new Date() , new Date());
+        BooksBorrowing bookBorrowing = new BooksBorrowing(new Date());
         Books book = new Books("borrowed");
         Readers reader = new Readers("Krzysztof", "Zakrocki");
         List<BooksBorrowing> booksBorrowingList = new ArrayList<>();
-        booksBorrowingList.add(booksBorrowing);
+        booksBorrowingList.add(bookBorrowing);
         book.setBooksBorrowing(booksBorrowingList);
         reader.setBooksBorrowingList(booksBorrowingList);
-        booksBorrowing.setReaders(reader);
-        booksBorrowing.setBooks(book);
+        bookBorrowing.setReaders(reader);
+        bookBorrowing.setBooks(book);
         //When
-        booksBorrowingDao.save(booksBorrowing);
-        readersDao.save(reader);
-        booksDao.save(book);
-        long id = booksBorrowing.getBorrowingId();
-        Optional<BooksBorrowing> booksBorrowingInTest = booksBorrowingDao.findById(id);
+        bookBorrowingDao.save(bookBorrowing);
+        readerDao.save(reader);
+        bookDao.save(book);
+        long id = bookBorrowing.getBorrowingId();
+        Optional<BooksBorrowing> booksBorrowingInTest = bookBorrowingDao.findById(id);
         //Then
         assertTrue(booksBorrowingInTest.isPresent());
         assertEquals(new Long(id), booksBorrowingInTest.get().getBorrowingId());
         assertEquals("borrowed", booksBorrowingInTest.get().getBooks().getStatus());
         assertEquals("Zakrocki", booksBorrowingInTest.get().getReaders().getLastname());
         //CleanUp
-        booksBorrowingDao.deleteById(id);
-        readersDao.deleteById(reader.getReaderId());
-        booksDao.deleteById(book.getBookId());
+        bookBorrowingDao.deleteById(id);
+        readerDao.deleteById(reader.getReaderId());
+        bookDao.deleteById(book.getBookId());
     }
 }
