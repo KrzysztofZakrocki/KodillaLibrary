@@ -1,4 +1,4 @@
-package com.library.kodillalibrary.domain.titles;
+package com.library.kodillalibrary.domain.title;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class TitlesDto {
+public class TitleDto {
 
     private Long titleId;
     private String title;

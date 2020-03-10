@@ -1,9 +1,9 @@
 package com.library.kodillalibrary.domain;
 
-import com.library.kodillalibrary.domain.bookBorrowing.BooksBorrowing;
-import com.library.kodillalibrary.domain.bookBorrowing.dao.BooksBorrowingDao;
-import com.library.kodillalibrary.domain.readers.Readers;
-import com.library.kodillalibrary.domain.readers.dao.ReadersDao;
+import com.library.kodillalibrary.domain.bookBorrowing.BookBorrowing;
+import com.library.kodillalibrary.domain.bookBorrowing.dao.BookBorrowingDao;
+import com.library.kodillalibrary.domain.reader.Reader;
+import com.library.kodillalibrary.domain.reader.dao.ReaderDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,22 +20,22 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ReadersTestSuite {
+public class ReaderTestSuite {
 
     @Autowired
-    public ReadersDao readerDao;
+    public ReaderDao readerDao;
 
     @Autowired
-    public BooksBorrowingDao bookBorrowingDao;
+    public BookBorrowingDao bookBorrowingDao;
 
     @Test
     public void testReadersSave() {
         //Given
-        Readers reader = new Readers("Krzysztof", "Zakrocki");
+        Reader reader = new Reader("Krzysztof", "Zakrocki");
         //When
         readerDao.save(reader);
         long id = reader.getReaderId();
-        Optional<Readers> readerInTest = readerDao.findById(id);
+        Optional<Reader> readerInTest = readerDao.findById(id);
         //Then
         assertTrue(readerInTest.isPresent());
         //CleanUp
@@ -45,22 +45,22 @@ public class ReadersTestSuite {
     @Test
     public void testReadersEntityWithOtherEntities() {
         //Given
-        Readers reader = new Readers("Krzysztof", "Zakrocki");
-        BooksBorrowing bookBorrowing = new BooksBorrowing(new Date());
-        List<BooksBorrowing> booksBorrowingList = new ArrayList<>();
-        booksBorrowingList.add(bookBorrowing);
-        reader.setBooksBorrowingList(booksBorrowingList);
-        bookBorrowing.setReaders(reader);
+        Reader reader = new Reader("Krzysztof", "Zakrocki");
+        BookBorrowing bookBorrowing = new BookBorrowing(new Date());
+        List<BookBorrowing> bookBorrowingList = new ArrayList<>();
+        bookBorrowingList.add(bookBorrowing);
+        reader.setBookBorrowingList(bookBorrowingList);
+        bookBorrowing.setReader(reader);
         //When
         readerDao.save(reader);
         bookBorrowingDao.save(bookBorrowing);
         long id = reader.getReaderId();
-        Optional<Readers> readerInTest = readerDao.findById(id);
+        Optional<Reader> readerInTest = readerDao.findById(id);
         //Then
         assertTrue(readerInTest.isPresent());
         assertEquals(new Long(id), readerInTest.get().getReaderId());
         assertEquals("Zakrocki", readerInTest.get().getLastname());
-        assertEquals(bookBorrowing.getBorrowingId(), readerInTest.get().getBooksBorrowingList().get(0).getBorrowingId());
+        assertEquals(bookBorrowing.getBorrowingId(), readerInTest.get().getBookBorrowingList().get(0).getBorrowingId());
         //CleanUp
         readerDao.deleteById(id);
         bookBorrowingDao.deleteById(bookBorrowing.getBorrowingId());

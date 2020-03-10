@@ -1,7 +1,7 @@
 package com.library.kodillalibrary.controller.readers;
 
-import com.library.kodillalibrary.domain.readers.Readers;
-import com.library.kodillalibrary.domain.readers.dao.ReadersDao;
+import com.library.kodillalibrary.domain.reader.Reader;
+import com.library.kodillalibrary.domain.reader.dao.ReaderDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 public class DbReadersService {
 
     @Autowired
-    private ReadersDao readerDao;
+    private ReaderDao readerDao;
 
-    public Readers saveReader(Readers reader) {
+    public Reader saveReader(Reader reader) {
         return readerDao.save(reader);
     }
 }

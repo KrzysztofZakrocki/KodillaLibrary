@@ -1,7 +1,6 @@
-package com.library.kodillalibrary.domain.titles;
+package com.library.kodillalibrary.domain.title;
 
-import com.library.kodillalibrary.domain.bookBorrowing.BooksBorrowing;
-import com.library.kodillalibrary.domain.books.Books;
+import com.library.kodillalibrary.domain.book.Book;
 import com.sun.istack.NotNull;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,19 +13,19 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "TITLES")
-public class Titles {
+public class Title {
 
     private Long titleId;
     private String title;
     private String author;
     private int yearOfPublication;
-    private List<Books> booksList;
+    private List<Book> bookList;
 
-    public Titles(String title, String author, int yearOfPublication) {
+    public Title(String title, String author, int yearOfPublication) {
         this.title = title;
         this.author = author;
         this.yearOfPublication = yearOfPublication;
-        booksList = new ArrayList<>();
+        bookList = new ArrayList<>();
     }
 
     @Id
@@ -54,13 +53,13 @@ public class Titles {
     }
 
     @OneToMany(
-            targetEntity = Books.class,
+            targetEntity = Book.class,
             mappedBy = "title",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
-    public List<Books> getBooksList() {
-        return booksList;
+    public List<Book> getBookList() {
+        return bookList;
     }
 
 }

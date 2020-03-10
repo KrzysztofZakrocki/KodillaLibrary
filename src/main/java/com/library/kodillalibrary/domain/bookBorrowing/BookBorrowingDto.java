@@ -11,7 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-public class BooksBorrowingDto {
+public class BookBorrowingDto {
 
     private Long borrowingId;
     private Date dateOfBorrowing;

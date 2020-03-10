@@ -1,6 +1,6 @@
-package com.library.kodillalibrary.domain.readers;
+package com.library.kodillalibrary.domain.reader;
 
-import com.library.kodillalibrary.domain.bookBorrowing.BooksBorrowing;
+import com.library.kodillalibrary.domain.bookBorrowing.BookBorrowing;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,11 +13,11 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ReadersDto {
+public class ReaderDto {
 
     private Long readerId;
     private String firstname;
     private String lastname;
     private Date accountCreateDate;
-    private List<BooksBorrowing> booksBorrowingList;
+    private List<BookBorrowing> bookBorrowingList;
 }

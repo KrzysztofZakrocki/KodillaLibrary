@@ -1,7 +1,7 @@
 package com.library.kodillalibrary.controller.titles;
 
-import com.library.kodillalibrary.domain.titles.Titles;
-import com.library.kodillalibrary.domain.titles.dao.TitlesDao;
+import com.library.kodillalibrary.domain.title.Title;
+import com.library.kodillalibrary.domain.title.dao.TitleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 public class DbTitleService {
 
     @Autowired
-    private TitlesDao titleDao;
+    private TitleDao titleDao;
 
-    public Titles addTitle(Titles title) {
+    public Title addTitle(Title title) {
         return titleDao.save(title);
     }
 }

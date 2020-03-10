@@ -1,24 +1,24 @@
 package com.library.kodillalibrary.controller.readers;
 
-import com.library.kodillalibrary.domain.readers.Readers;
-import com.library.kodillalibrary.domain.readers.ReadersDto;
+import com.library.kodillalibrary.domain.reader.Reader;
+import com.library.kodillalibrary.domain.reader.ReaderDto;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ReadersMapper {
 
-    public ReadersDto mapToDto(Readers reader) {
-        return new ReadersDto(
+    public ReaderDto mapToDto(Reader reader) {
+        return new ReaderDto(
                 reader.getReaderId(),
                 reader.getFirstname(),
                 reader.getLastname(),
                 reader.getAccountCreateDate(),
-                reader.getBooksBorrowingList()
+                reader.getBookBorrowingList()
         );
     }
 
-    public Readers mapToReader(ReadersDto readerDto) {
-        Readers reader = new Readers(
+    public Reader mapToReader(ReaderDto readerDto) {
+        Reader reader = new Reader(
                 readerDto.getFirstname(),
                 readerDto.getLastname()
         );
@@ -26,7 +26,7 @@ public class ReadersMapper {
         if(readerDto.getAccountCreateDate() != null){
             reader.setAccountCreateDate(readerDto.getAccountCreateDate());
         }
-        reader.setBooksBorrowingList(readerDto.getBooksBorrowingList());
+        reader.setBookBorrowingList(readerDto.getBookBorrowingList());
 
         return reader;
     }

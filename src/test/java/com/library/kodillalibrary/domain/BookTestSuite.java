@@ -1,11 +1,11 @@
 package com.library.kodillalibrary.domain;
 
-import com.library.kodillalibrary.domain.bookBorrowing.BooksBorrowing;
-import com.library.kodillalibrary.domain.bookBorrowing.dao.BooksBorrowingDao;
-import com.library.kodillalibrary.domain.books.Books;
-import com.library.kodillalibrary.domain.books.dao.BooksDao;
-import com.library.kodillalibrary.domain.titles.Titles;
-import com.library.kodillalibrary.domain.titles.dao.TitlesDao;
+import com.library.kodillalibrary.domain.bookBorrowing.BookBorrowing;
+import com.library.kodillalibrary.domain.bookBorrowing.dao.BookBorrowingDao;
+import com.library.kodillalibrary.domain.book.Book;
+import com.library.kodillalibrary.domain.book.dao.BookDao;
+import com.library.kodillalibrary.domain.title.Title;
+import com.library.kodillalibrary.domain.title.dao.TitleDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +22,25 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class BooksTestSuite {
+public class BookTestSuite {
 
     @Autowired
-    public BooksDao bookDao;
+    public BookDao bookDao;
 
     @Autowired
-    public TitlesDao titleDao;
+    public TitleDao titleDao;
 
     @Autowired
-    public BooksBorrowingDao bookBorrowingDao;
+    public BookBorrowingDao bookBorrowingDao;
 
     @Test
     public void testBooksSave() {
         //Given
-        Books book = new Books("Borrowed");
+        Book book = new Book("Borrowed");
         //When
         bookDao.save(book);
         long id = book.getBookId();
-        Optional<Books> booksInTest = bookDao.findById(id);
+        Optional<Book> booksInTest = bookDao.findById(id);
         //Then
         assertTrue(booksInTest.isPresent());
         //CleanUp
@@ -50,24 +50,24 @@ public class BooksTestSuite {
     @Test
     public void testBooksWithOtherEntities() {
         //Given
-        Books book = new Books("Borrowed");
-        BooksBorrowing bookBorrowing = new BooksBorrowing(new Date());
-        Titles title  = new Titles("Lord of the rings", "J.r.r. Tolkien", 1950);
-        List<BooksBorrowing> booksBorrowingList = new ArrayList<>();
-        booksBorrowingList.add(bookBorrowing);
-        book.setBooksBorrowing(booksBorrowingList);
-        bookBorrowing.setBooks(book);
+        Book book = new Book("Borrowed");
+        BookBorrowing bookBorrowing = new BookBorrowing(new Date());
+        Title title  = new Title("Lord of the rings", "J.r.r. Tolkien", 1950);
+        List<BookBorrowing> bookBorrowingList = new ArrayList<>();
+        bookBorrowingList.add(bookBorrowing);
+        book.setBookBorrowing(bookBorrowingList);
+        bookBorrowing.setBook(book);
         book.setTitle(title);
         //When
         bookDao.save(book);
         bookBorrowingDao.save(bookBorrowing);
         titleDao.save(title);
         long id = book.getBookId();
-        Optional<Books> booksInTest = bookDao.findById(id);
+        Optional<Book> booksInTest = bookDao.findById(id);
         //Then
         assertTrue(booksInTest.isPresent());
         assertEquals(new Long(id), booksInTest.get().getBookId());
-        assertEquals(new Long(bookBorrowing.getBorrowingId()), booksInTest.get().getBooksBorrowing().get(0).getBorrowingId());
+        assertEquals(new Long(bookBorrowing.getBorrowingId()), booksInTest.get().getBookBorrowing().get(0).getBorrowingId());
         assertEquals("J.r.r. Tolkien", booksInTest.get().getTitle().getAuthor());
         //CleanUp
         bookDao.deleteById(id);

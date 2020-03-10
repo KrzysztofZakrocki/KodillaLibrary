@@ -1,9 +1,9 @@
 package com.library.kodillalibrary.domain;
 
-import com.library.kodillalibrary.domain.books.Books;
-import com.library.kodillalibrary.domain.books.dao.BooksDao;
-import com.library.kodillalibrary.domain.titles.Titles;
-import com.library.kodillalibrary.domain.titles.dao.TitlesDao;
+import com.library.kodillalibrary.domain.book.Book;
+import com.library.kodillalibrary.domain.book.dao.BookDao;
+import com.library.kodillalibrary.domain.title.Title;
+import com.library.kodillalibrary.domain.title.dao.TitleDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,22 +19,22 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TitlesTestSuite {
+public class TitleTestSuite {
 
     @Autowired
-    public TitlesDao titleDao;
+    public TitleDao titleDao;
 
     @Autowired
-    public BooksDao bookDao;
+    public BookDao bookDao;
 
     @Test
     public void testTitlesSave() {
         //Given
-        Titles title = new Titles("Lord of The Rings", "Tolkien", 1950);
+        Title title = new Title("Lord of The Rings", "Tolkien", 1950);
         //When
         titleDao.save(title);
         long id = title.getTitleId();
-        Optional<Titles> titleInTest = titleDao.findById(id);
+        Optional<Title> titleInTest = titleDao.findById(id);
         //Then
         assertTrue(titleInTest.isPresent());
         //CleanUp
@@ -44,22 +44,22 @@ public class TitlesTestSuite {
     @Test
     public void testTitleEntityWithOtherEntities() {
         //Given
-        Titles title = new Titles("Lord of The Rings", "Tolkien", 1950);
-        Books book = new Books("Borrowed");
-        List<Books> booksList = new ArrayList<>();
-        booksList.add(book);
+        Title title = new Title("Lord of The Rings", "Tolkien", 1950);
+        Book book = new Book("Borrowed");
+        List<Book> bookList = new ArrayList<>();
+        bookList.add(book);
         book.setTitle(title);
-        title.setBooksList(booksList);
+        title.setBookList(bookList);
         //When
         bookDao.save(book);
         titleDao.save(title);
         long titleId = title.getTitleId();
-        Optional<Titles> titleInTest = titleDao.findById(titleId);
+        Optional<Title> titleInTest = titleDao.findById(titleId);
         //Then
         assertTrue(titleInTest.isPresent());
         assertEquals("Tolkien", titleInTest.get().getAuthor());
         assertEquals(1950, bookDao.findById(book.getBookId()).get().getTitle().getYearOfPublication());
-        assertEquals("Borrowed", titleDao.findById(titleId).get().getBooksList().get(0).getStatus());
+        assertEquals("Borrowed", titleDao.findById(titleId).get().getBookList().get(0).getStatus());
         //CleanUp
         titleDao.deleteById(titleId);
     }

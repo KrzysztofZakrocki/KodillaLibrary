@@ -1,14 +1,14 @@
 package com.library.kodillalibrary.controller.titles;
 
-import com.library.kodillalibrary.domain.titles.Titles;
-import com.library.kodillalibrary.domain.titles.TitlesDto;
+import com.library.kodillalibrary.domain.title.Title;
+import com.library.kodillalibrary.domain.title.TitleDto;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TitlesMapper {
 
-    public Titles mapToTitle(TitlesDto titleDto) {
-        Titles title = new Titles(
+    public Title mapToTitle(TitleDto titleDto) {
+        Title title = new Title(
                 titleDto.getTitle(),
                 titleDto.getAuthor(),
                 titleDto.getYearOfPublication()
@@ -17,8 +17,8 @@ public class TitlesMapper {
         return title;
     }
 
-    public TitlesDto mapToDto(Titles title) {
-        return new TitlesDto(
+    public TitleDto mapToDto(Title title) {
+        return new TitleDto(
             title.getTitleId(),
             title.getTitle(),
             title.getAuthor(),

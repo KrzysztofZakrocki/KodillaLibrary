@@ -1,6 +1,6 @@
-package com.library.kodillalibrary.domain.titles.dao;
+package com.library.kodillalibrary.domain.book.dao;
 
-import com.library.kodillalibrary.domain.titles.Titles;
+import com.library.kodillalibrary.domain.book.Book;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,8 +9,8 @@ import java.util.List;
 
 @Transactional
 @Repository
-public interface TitlesDao extends CrudRepository<Titles, Long> {
+public interface BookDao extends CrudRepository<Book, Long> {
 
     @Override
-    List<Titles> findAll();
+    List<Book> findAll();
 }

@@ -8,9 +8,9 @@ import com.library.kodillalibrary.controller.readers.ReadersMapper;
 import com.library.kodillalibrary.controller.readers.ReaderNotFoundException;
 import com.library.kodillalibrary.controller.titles.DbTitleService;
 import com.library.kodillalibrary.controller.titles.TitlesMapper;
-import com.library.kodillalibrary.domain.books.BooksDto;
-import com.library.kodillalibrary.domain.readers.ReadersDto;
-import com.library.kodillalibrary.domain.titles.TitlesDto;
+import com.library.kodillalibrary.domain.book.BookDto;
+import com.library.kodillalibrary.domain.reader.ReaderDto;
+import com.library.kodillalibrary.domain.title.TitleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -34,17 +34,17 @@ public class LibraryController {
     private BooksMapper bookMapper;
 
     @RequestMapping(method = RequestMethod.POST, value = "/readers", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ReadersDto addReader(@RequestBody ReadersDto readerDto) {
+    public ReaderDto addReader(@RequestBody ReaderDto readerDto) {
         return readerMapper.mapToDto(readerService.saveReader(readerMapper.mapToReader(readerDto)));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/titles", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public TitlesDto addTitle(@RequestBody TitlesDto titleDto) {
+    public TitleDto addTitle(@RequestBody TitleDto titleDto) {
         return titleMapper.mapToDto(titleService.addTitle(titleMapper.mapToTitle(titleDto)));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/books", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public BooksDto addBook(@RequestBody BooksDto bookDto) {
+    public BookDto addBook(@RequestBody BookDto bookDto) {
        return bookMapper.mapToDto(bookService.saveBook(bookMapper.mapToBook(bookDto)));
     }
 

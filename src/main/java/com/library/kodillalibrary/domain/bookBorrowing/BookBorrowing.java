@@ -1,7 +1,7 @@
 package com.library.kodillalibrary.domain.bookBorrowing;
 
-import com.library.kodillalibrary.domain.books.Books;
-import com.library.kodillalibrary.domain.readers.Readers;
+import com.library.kodillalibrary.domain.book.Book;
+import com.library.kodillalibrary.domain.reader.Reader;
 import com.sun.istack.NotNull;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,15 +13,15 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "BOOKS_BORROWING")
-public class BooksBorrowing {
+public class BookBorrowing {
 
     private Long borrowingId;
     private Date dateOfBorrowing;
     private Date dateOfReturn;
-    private Books books;
-    private Readers readers;
+    private Book book;
+    private Reader reader;
 
-    public BooksBorrowing(Date dateOfBorrowing) {
+    public BookBorrowing(Date dateOfBorrowing) {
         this.dateOfBorrowing = dateOfBorrowing;
     }
 
@@ -47,15 +47,15 @@ public class BooksBorrowing {
             CascadeType.MERGE,
             CascadeType.REFRESH})
     @JoinColumn(name = "BOOK_ID")
-    public Books getBooks() {
-        return books;
+    public Book getBook() {
+        return book;
     }
 
     @ManyToOne(cascade = {CascadeType.PERSIST,
             CascadeType.MERGE,
             CascadeType.REFRESH})
     @JoinColumn(name = "READER_ID")
-    public Readers getReaders() {
-        return readers;
+    public Reader getReader() {
+        return reader;
     }
 }

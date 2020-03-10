@@ -1,11 +1,11 @@
 package com.library.kodillalibrary.domain;
 
-import com.library.kodillalibrary.domain.bookBorrowing.BooksBorrowing;
-import com.library.kodillalibrary.domain.bookBorrowing.dao.BooksBorrowingDao;
-import com.library.kodillalibrary.domain.books.Books;
-import com.library.kodillalibrary.domain.books.dao.BooksDao;
-import com.library.kodillalibrary.domain.readers.Readers;
-import com.library.kodillalibrary.domain.readers.dao.ReadersDao;
+import com.library.kodillalibrary.domain.bookBorrowing.BookBorrowing;
+import com.library.kodillalibrary.domain.bookBorrowing.dao.BookBorrowingDao;
+import com.library.kodillalibrary.domain.book.Book;
+import com.library.kodillalibrary.domain.book.dao.BookDao;
+import com.library.kodillalibrary.domain.reader.Reader;
+import com.library.kodillalibrary.domain.reader.dao.ReaderDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,25 +21,25 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class BooksBorrowingTestSuite {
+public class BookBorrowingTestSuite {
 
     @Autowired
-    public BooksBorrowingDao bookBorrowingDao;
+    public BookBorrowingDao bookBorrowingDao;
 
     @Autowired
-    public BooksDao bookDao;
+    public BookDao bookDao;
 
     @Autowired
-    public ReadersDao readerDao;
+    public ReaderDao readerDao;
 
     @Test
     public void testBooksBorrowingSave() {
         //Given
-        BooksBorrowing bookBorrowing = new BooksBorrowing(new Date());
+        BookBorrowing bookBorrowing = new BookBorrowing(new Date());
         //When
         bookBorrowingDao.save(bookBorrowing);
         long id = bookBorrowing.getBorrowingId();
-        Optional<BooksBorrowing> bookBorrowingInTest = bookBorrowingDao.findById(id);
+        Optional<BookBorrowing> bookBorrowingInTest = bookBorrowingDao.findById(id);
         //Then
         assertTrue(bookBorrowingInTest.isPresent());
         //CleanUp
@@ -49,26 +49,26 @@ public class BooksBorrowingTestSuite {
     @Test
     public void testBooksBorrowingWithOtherEntities() {
         //Given
-        BooksBorrowing bookBorrowing = new BooksBorrowing(new Date());
-        Books book = new Books("borrowed");
-        Readers reader = new Readers("Krzysztof", "Zakrocki");
-        List<BooksBorrowing> booksBorrowingList = new ArrayList<>();
-        booksBorrowingList.add(bookBorrowing);
-        book.setBooksBorrowing(booksBorrowingList);
-        reader.setBooksBorrowingList(booksBorrowingList);
-        bookBorrowing.setReaders(reader);
-        bookBorrowing.setBooks(book);
+        BookBorrowing bookBorrowing = new BookBorrowing(new Date());
+        Book book = new Book("borrowed");
+        Reader reader = new Reader("Krzysztof", "Zakrocki");
+        List<BookBorrowing> bookBorrowingList = new ArrayList<>();
+        bookBorrowingList.add(bookBorrowing);
+        book.setBookBorrowing(bookBorrowingList);
+        reader.setBookBorrowingList(bookBorrowingList);
+        bookBorrowing.setReader(reader);
+        bookBorrowing.setBook(book);
         //When
         bookBorrowingDao.save(bookBorrowing);
         readerDao.save(reader);
         bookDao.save(book);
         long id = bookBorrowing.getBorrowingId();
-        Optional<BooksBorrowing> booksBorrowingInTest = bookBorrowingDao.findById(id);
+        Optional<BookBorrowing> booksBorrowingInTest = bookBorrowingDao.findById(id);
         //Then
         assertTrue(booksBorrowingInTest.isPresent());
         assertEquals(new Long(id), booksBorrowingInTest.get().getBorrowingId());
-        assertEquals("borrowed", booksBorrowingInTest.get().getBooks().getStatus());
-        assertEquals("Zakrocki", booksBorrowingInTest.get().getReaders().getLastname());
+        assertEquals("borrowed", booksBorrowingInTest.get().getBook().getStatus());
+        assertEquals("Zakrocki", booksBorrowingInTest.get().getReader().getLastname());
         //CleanUp
         bookBorrowingDao.deleteById(id);
         readerDao.deleteById(reader.getReaderId());

@@ -1,7 +1,7 @@
-package com.library.kodillalibrary.domain.books;
+package com.library.kodillalibrary.domain.book;
 
-import com.library.kodillalibrary.domain.bookBorrowing.BooksBorrowing;
-import com.library.kodillalibrary.domain.titles.Titles;
+import com.library.kodillalibrary.domain.bookBorrowing.BookBorrowing;
+import com.library.kodillalibrary.domain.title.Title;
 import com.sun.istack.NotNull;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,14 +13,14 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "BOOKS")
-public class Books {
+public class Book {
 
     private Long bookId;
     private String status;
-    private Titles title;
-    private List<BooksBorrowing> booksBorrowing;
+    private Title title;
+    private List<BookBorrowing> bookBorrowing;
 
-    public Books (String status) {
+    public Book(String status) {
         this.status = status;
     }
 
@@ -42,19 +42,19 @@ public class Books {
             CascadeType.MERGE,
             CascadeType.REFRESH})
     @JoinColumn(name = "TITLE_ID")
-    public Titles getTitle() {
+    public Title getTitle() {
         return title;
     }
 
     @OneToMany(
-            targetEntity = BooksBorrowing.class,
-            mappedBy = "books",
+            targetEntity = BookBorrowing.class,
+            mappedBy = "book",
             cascade = {CascadeType.PERSIST,
                     CascadeType.MERGE,
                     CascadeType.REFRESH},
             fetch = FetchType.EAGER
     )
-    public List<BooksBorrowing> getBooksBorrowing() {
-        return booksBorrowing;
+    public List<BookBorrowing> getBookBorrowing() {
+        return bookBorrowing;
     }
 }
